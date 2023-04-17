@@ -37,6 +37,8 @@ void addNode(node **head, guardian *data) {
 
 }
 
+
+
 void init(node **head){
 	
 	FILE *fp = fopen("personaje_init.txt", "r");
@@ -68,9 +70,6 @@ void init(node **head){
 	}
 
 	fclose(fp);
-	
-	
-	
 }
 
 void addNodeToPlayer(node **playerHead, guardian *selectedGuardian) {
@@ -106,10 +105,10 @@ void selectCharacter(node *head, node **playerHead) {
 		count++;
 	}
 	int selected;
-	printf("Seleccione un personaje por su número en la lista: ");
+	printf("Seleccione un personaje por su nÃºmero en la lista: ");
 	scanf("%d", &selected);
 	if (selected < 1 || selected >= count) {
-		printf("Seleccion no válida\n");
+		printf("Seleccion no vÃ¡lida\n");
 	} else {
 		current = head;
 	int i = 1;
@@ -133,12 +132,12 @@ void createCharacter(node **playerHead){
 	
 	printf("Indique su nombre el nobre que desea para su guardian:\n");
 	
-	fflush(stdin); // Limpiar el buffer de entrada porque fgets no funcionaría después del scanf
+	fflush(stdin); // Limpiar el buffer de entrada porque fgets no funcionarÃ­a despuÃ©s del scanf
 	fgets(p->nombre, M, stdin);
 	
 	while(validar2 == 2)
 	{
-		printf("¿Que tipo de guardian desea crear?\n");
+		printf("Â¿Que tipo de guardian desea crear?\n");
 		printf("[1] mage \t[2] viking\n");
 		printf("[3] beast \t[4] nigromante\n\n");
 		printf("Eleccion:");
@@ -197,92 +196,33 @@ void createCharacter(node **playerHead){
 }
 	
 	
-	
-
-
-
-void menuOptions(){
+int menuOptions(){
 	int opt;
 	int validar1 = 1;
-	int validar2 = 2;
-	int creation;
 
-	node *head = NULL; // Cabeza de la cola de personajes disponibles del juego
-	init(&head); // Generar la cola de personajes disponibles
-	node *playerHead = NULL; // Cabeza de la cola de personajes seleccionados por el jugador
+
+	//node *head = NULL; // Cabeza de la cola de personajes disponibles del juego
+	//init(&head); // Generar la cola de personajes disponibles
+	//node *playerHead = NULL; // Cabeza de la cola de personajes seleccionados por el jugador
 	
 	while(validar1 == 1)
 	{
-		printf("¿Cuantos jugadores participaran?(max.2)\n");//hacer afuera lo de los jugadores 
+		printf("Â¿Cuantos jugadores participaran?(max.2)\n");//hacer afuera lo de los jugadores 
 		scanf("%d",&opt);
 		
 		
 		switch(opt)
 		{
 			case 1 :
-								
-				while(validar2 == 2)
-				{
-					printf("Desea crear un personaje o usar uno predeterminado?\n");
-					printf("[1] Crear\t[2] Predeterminado\n");
-					scanf("%d",&creation);
-					
-					switch(creation)
-					{
-						case 1 :
-							
-							createCharacter(&playerHead);
-							validar2++;
-							break;
-							
-						case 2 :
-							
-							selectCharacter(head, &playerHead);
-							validar2++;
-							break;
-		
-						default:
-						
-							printf("opcion invalida");
-							break;
-					}	
-				}
+				
 				validar1++;
+				return opt;
 				break;
 				
 			case 2 :
 				
-				while(validar2 == 2)
-				{
-					int i;
-					for(i=0;i<2;i++){
-						printf("Desea crear un personaje o usar uno predeterminado?\n");
-						printf("[1] Crear\t[2] Predeterminado\n");
-						scanf("%d",&creation);
-						
-						switch(creation)
-						{
-							case 1 :
-								
-								createCharacter(&playerHead);
-								validar2++;
-								break;
-								
-							case 2 :
-								
-								selectCharacter(head, &playerHead);
-								validar2++;
-								break;
-			
-							default:
-							
-								printf("opcion invalida");
-								break;
-						}	
-					}
-				}
-					
 				validar1++;
+				return opt;
 				break;
 				
 			default:
@@ -316,21 +256,29 @@ int selectTournament(){
 			default:
 				printf("opcion invalida\n");
 				break;
-		}
-		
-		
+		}	
 	}
 	return mode;	
 }
 
-void startFight(int mode){
+void startFight(int mode/*, guardian **enemies*/){
+	srand(time(NULL));
 	
 	switch(mode){
-		case 1 :
+		case 1 : //3 enemigos
+			
+			//i = rand()%27;
+			//enemies[i]= a;
+			//addEmemy();
+			 
 			break;
-		case 2 :
+			
+		case 2 : //5 ememigos
+			
 			break;
-		case 3 :
+			
+		case 3 : //7 ememigos
+			
 			break; 
 	}
 }
@@ -359,6 +307,8 @@ void initEnemy(guardian **enemies) {
 		
 		enemies[i] = e;
 		
+		//printf("%d--",enemies[i]->vida);
+		
 		i++;
 	}
 	fclose(fp);
@@ -368,20 +318,96 @@ void initEnemy(guardian **enemies) {
 
 int main(){
 	int mode;
+	int opt;
+	int validar2 = 2;
+	int creation;
+	
 	guardian *enemies[26];
 	printf("The Guardians Tournament\n");
 	
-	node *head = NULL; // Cola de personajes disponibles
-	node *playerHead = NULL;
-	
-	menuOptions();
-	printCharacterStatus(playerHead);
-	mode = selectTournament();
-	printf("%d",mode);
-	
 
+	node *head = NULL; // Cabeza de la cola de personajes disponibles del juego
+	init(&head); // Generar la cola de personajes disponibles
+	node *playerHead = NULL; // Cabeza de la cola de personajes seleccionados por el jugador
+	
+	
+	
+	opt = menuOptions();
+	printf("-------%d--------",opt);
+
+	switch(opt)
+	{
+		
+		case 1 :
+			while(validar2 == 2)
+				{
+				
+					printf("Desea crear un personaje o usar uno predeterminado?\n");
+					printf("[1] Crear\t[2] Predeterminado\n");
+					scanf("%d",&creation);
+					
+					switch(creation)
+					{
+						case 1 :
+							
+							createCharacter(&playerHead);
+							validar2++;
+							break;
+							
+						case 2 :
+							
+							selectCharacter(head, &playerHead);
+							validar2++;
+							break;
+		
+						default:
+						
+							printf("opcion invalida");
+							break;
+					}	
+				}
+			break;
+		case 2 :
+			while(validar2 == 2)
+			{
+				int i;
+				for(i=0;i<2;i++)
+				{
+					printf("Desea crear un personaje o usar uno predeterminado?\n");
+					printf("[1] Crear\t[2] Predeterminado\n");
+					scanf("%d",&creation);
+						
+					switch(creation)
+					{
+						case 1 :
+							
+							createCharacter(&playerHead);
+							validar2++;
+							break;
+								
+						case 2 :
+								
+							selectCharacter(head, &playerHead);
+							validar2++;
+							break;
+			
+						default:
+							
+							printf("opcion invalida");
+							break;
+					}	
+				}
+			}
+			break;
+	}
+	
+	//printCharacterStatus(playerHead);
+	
+	mode = selectTournament();
+	//printf("%d",mode);
 	
 	initEnemy(enemies); 
+	
 	startFight(mode);
 	
 	
