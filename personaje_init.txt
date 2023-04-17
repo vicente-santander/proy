@@ -1,0 +1,4 @@
+rias mage 480 180 50
+inozuke beast 560 135 90
+heimdall viking 530 110 75
+kuro nigromante 430 180 60
