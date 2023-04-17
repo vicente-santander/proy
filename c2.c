@@ -88,10 +88,14 @@ void addNodeToPlayer(node **playerHead, guardian *selectedGuardian) {
 }
 void printCharacterStatus(node *playerHead) {
 	node *current = playerHead;
+	printf("estado del equipo\n");
 	while(current != NULL) {
+		printf("----------------\n");
 		printf("%s (%s) - Vida: %d, Ataque: %d, Defensa: %d\n", current->data->nombre, current->data->tipo, current->data->vida, current->data->p_ataque, current->data->p_defensa);
+		
 		current = current->next;
 	}
+	printf("----------------\n");
 }
 
 
@@ -122,10 +126,11 @@ void selectCharacter(node *head, node **playerHead) {
 	}
 }
 
-void createCharacter(node **playerHead){
+void createCharacter(node **playerHead){	//	problema con el \n al final de la cadena
 	int op;
 	int validar1 = 1;
 	int validar2 = 2;
+	char nombre[M];
 	srand(time(NULL));
 	
 	guardian *p = malloc(sizeof(guardian)); // Reservar memoria para el struct guardian
@@ -133,7 +138,9 @@ void createCharacter(node **playerHead){
 	printf("Indique su nombre el nobre que desea para su guardian:\n");
 	
 	fflush(stdin); // Limpiar el buffer de entrada porque fgets no funcionaría después del scanf
-	fgets(p->nombre, M, stdin);
+	
+	fgets(p->nombre, M, stdin);	//	----------------------------------problema con el \n al final de la cadena--------------------------------
+	
 	
 	while(validar2 == 2)
 	{
@@ -333,7 +340,7 @@ int main(){
 	
 	
 	opt = menuOptions();
-	printf("-------%d--------",opt);
+	//printf("-------%d--------",opt);
 
 	switch(opt)
 	{
@@ -401,7 +408,7 @@ int main(){
 			break;
 	}
 	
-	//printCharacterStatus(playerHead);
+	printCharacterStatus(playerHead);
 	
 	mode = selectTournament();
 	//printf("%d",mode);
